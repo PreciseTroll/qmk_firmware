@@ -8,6 +8,11 @@
 #define _FL1 1
 #define _FL2 2
 
+// Macros
+enum {
+    M_EMAIL = SAFE_RANGE,
+  };
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* _BL: Base Layer(Default) - For ISO enter use ANSI \
   * ,-------------------------------------------------------------------------------.
@@ -45,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
   [_FL1] = LAYOUT_all(
     KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_INS,  KC_NLCK, _______, _______, _______,
-    _______, _______, _______, _______, RESET,   _______, _______, _______, _______, _______, _______, KC_UP, _______,          _______, _______, _______, _______, _______,
+    _______, _______, _______, M_EMAIL, RESET,   _______, _______, _______, _______, _______, _______, KC_UP, _______,          _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, RGB_HUI, RGB_SAI, RGB_VAI, _______, KC_LEFT, KC_RIGHT, _______,          _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, RGB_TOG, RGB_HUD, RGB_SAD, RGB_VAD, BL_DEC,  BL_INC,  KC_DOWN, KC_RSFT, KC_MUTE, KC_VOLU, _______, _______, _______, _______,
     _______, _______, _______,                            BL_TOGG,                            _______, _______, _______, _______, KC_VOLD, _______, _______, _______, _______
@@ -83,8 +88,15 @@ void matrix_scan_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  return true;
-}
+    if (record->event.pressed) {
+        switch(keycode) {
+            case M_EMAIL:
+              SEND_STRING("precisetroll@email.com");
+              return false; break;
+        }
+      }
+      return true;
+    };
 
 void led_set_user(uint8_t usb_led) {
 
