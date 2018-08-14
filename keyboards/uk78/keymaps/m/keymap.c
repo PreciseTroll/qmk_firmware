@@ -91,7 +91,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch(keycode) {
             case M_EMAIL:
-              SEND_STRING("precisetroll@email.com");
+              SEND_STRING("electronic-mail@email.com");
               return false; break;
         }
       }
